@@ -1,53 +1,50 @@
-﻿namespace Blackjack
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+
+namespace Blackjack
 {
     internal class master
     {
-        class carta
+        class Program
         {
-            public string id;
-            public string tipo;
-            public int valor;
-
-            static void Main(string[] args)
+            static void Principal()
             {
-                carta pica1 = new carta();
-                pica1.id = "p1";
-                pica1.tipo = "pica";
-                pica1.valor = 1;
+                //Crear un nuevo mazo aleatorio
+                Deck deck = new Deck();
+                deck.Iniciar();
 
-                carta pica2 = new carta();
-                pica2.id = "p2";
-                pica2.tipo = "pica";
-                pica2.valor = 2;
+                //Aleatorizar el mazo
+                deck.Mezclar();
 
-                carta pica3 = new carta();
-                pica1.id = "p3";
-                pica1.tipo = "pica";
-                pica1.valor = 3;
+                //Elegir y mostrar una carta aleatoria
+                Carta randomCard = deck.CartaAleatoria();
+                Console.WriteLine($"Carta aleatoria: {randomCard.Numero} de {randomCard.Tipo}");
+            }
+        }
 
-                carta pica4 = new carta();
-                pica1.id = "p4";
-                pica1.tipo = "pica";
-                pica1.valor = 4;
+        class Carta
+        {
+            public string Numero { get; set; }
+            public string Tipo { get; set; }
 
-                carta pica5 = new carta();
-                pica1.id = "p5";
-                pica1.tipo = "pica";
-                pica1.valor = 5;
+            public Carta(string numero, string tipo)
+            {
+                Numero = numero;
+                Tipo = tipo;
+            }
+        }
 
-                carta pica6 = new carta();
-                pica1.id = "p6";
-                pica1.tipo = "pica";
-                pica1.valor = 6;
+        class Deck
+        {
+            private List<Carta> cartas;
 
             public void Iniciar()
             {
                 cartas = new List<Carta>();
 
-                carta pica8 = new carta();
-                pica1.id = "p8";
-                pica1.tipo = "pica";
-                pica1.valor = 8;
+                string[] numero = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
+                string[] tipo = { "Hearts", "Diamonds", "Clubs", "Spades" };
 
                 foreach (string suit in tipo)
                 {
@@ -58,25 +55,33 @@
                 }
             }
 
-                carta pica10 = new carta();
-                pica1.id = "p10";
-                pica1.tipo = "pica";
-                pica1.valor = 10;
+            public void Mezclar()
+            {
+                Random random = new Random();
+                int n = cartas.Count;
+                while (n > 1)
+                {
+                    n--;
+                    int k = random.Next(n + 1);
+                    Carta value = cartas[k];
+                    cartas[k] = cartas[n];
+                    cartas[n] = value;
+                }
+            }
 
-                carta pica11 = new carta();
-                pica1.id = "p11";
-                pica1.tipo = "pica";
-                pica1.valor = 10;
+            public Carta CartaAleatoria()
+            {
+                if (cartas.Count == 0)
+                {
+                    MessageBox.Show("La baraja se quedo sin cartas");
+                }
 
-                carta pica12 = new carta();
-                pica1.id = "p12";
-                pica1.tipo = "pica";
-                pica1.valor = 10;
+                Random random = new Random();
+                int randomIndex = random.Next(cartas.Count);
+                Carta drawnCard = cartas[randomIndex];
+                cartas.RemoveAt(randomIndex);
 
-                carta pica13 = new carta();
-                pica1.id = "p13";
-                pica1.tipo = "pica";
-                pica1.valor = 10;
+                return drawnCard;
             }
         }
     }
