@@ -40,20 +40,23 @@
                 pica1.tipo = "pica";
                 pica1.valor = 6;
 
-                carta pica7 = new carta();
-                pica1.id = "p7";
-                pica1.tipo = "pica";
-                pica1.valor = 7;
+            public void Iniciar()
+            {
+                cartas = new List<Carta>();
 
                 carta pica8 = new carta();
                 pica1.id = "p8";
                 pica1.tipo = "pica";
                 pica1.valor = 8;
 
-                carta pica9 = new carta();
-                pica1.id = "p9";
-                pica1.tipo = "pica";
-                pica1.valor = 9;
+                foreach (string suit in tipo)
+                {
+                    foreach (string rank in numero)
+                    {
+                        cartas.Add(new Carta(rank, suit));
+                    }
+                }
+            }
 
                 carta pica10 = new carta();
                 pica1.id = "p10";
